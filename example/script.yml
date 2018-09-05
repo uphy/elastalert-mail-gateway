@@ -1,0 +1,7 @@
+type: script
+script: |
+  if doc["hoge"] == "HOGE" {
+    send("yuhi.ishikura@gmail.com")
+  } else {
+    send("foo@bar.com")
+  }

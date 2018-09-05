@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    ports:
+      - "9200"
+    volumes:
+      - "./data:/usr/share/elasticsearch/data"
+  
+  elastalert:
+    image: uphy/elastalert:0.1.35
+    volumes:
+      - "./rule.yml:/opt/elastalert/rules/rule.yml"
+      - "./elastalert-config.yml:/opt/elastalert/config.yaml"
+    entrypoint: [ "sh", "-c" ,"elastalert-create-index; elastalert --verbose" ]
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      # HTTP
+      - "8025:8025"
+      # SMTP
+      - "1025:1025"
+  gateway:
+    build: ..
+    volumes:
+      - "./gateway-config.yml:/etc/elastalert-mail-gateway/config.yml"
+    ports:
+      - "2525"

@@ -1,0 +1,29 @@
+smtp_host: mailhog
+smtp_port: 1025
+
+script: |
+  if strings.HasSuffix(doc.host, "-dev") {
+      return &Mail{
+          To: "",
+          Cc: "",
+      }
+  }
+  return &Mail{
+      To: "",
+      Cc: "",
+  }
+ 
+rules:
+  - to:
+      - dev@foo.com
+      - ops@foo.com
+    condition:
+      and:
+        - wildcard:
+            doc.host: "*-dev"
+        - gte:
+            doc.system.cpu.total.pct: 0.9
+  - to: ops@foo.com
+    default: true
+    condition:
+      constant: false

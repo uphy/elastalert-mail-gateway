@@ -1,0 +1,14 @@
+name: test rule
+index: test
+type: any
+filter:
+- match_all: {}
+aggregation:
+  seconds: 3
+alert: email
+alert_subject: myalert
+alert_text: myalert aaaaa
+from_addr: '"Me" <no-reply@example.com>'
+email: '"You" <customer@example.com>'
+smtp_host: gateway
+smtp_port: 2525

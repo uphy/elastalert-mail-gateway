@@ -1,0 +1,20 @@
+smtp_host: localhost
+smtp_port: 2525
+
+
+mails:
+  - to:
+      - user1@gmail.com
+      - user2@gmail.com
+    condition:
+      - wildcard:
+          mail.subject: myalert*
+      - match:
+          doc.beat.name: aaa
+      - or:
+        - gt:
+            doc.cpu: 0.8
+        - gt:
+            doc.memory: 0.8
+  - to: user1@gmail.com
+    default: true
