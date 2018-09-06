@@ -6,13 +6,14 @@ import (
 	"os"
 
 	"github.com/ghodss/yaml"
+	"github.com/uphy/elastalert-mail-gateway/pkgs/gateway"
 )
 
 type (
 	Config struct {
-		SMTPHost string `json:"smtp_host,omitempty"`
-		SMTPPort int    `json:"smtp_port,omitempty"`
-		Rules    Rules  `json:"rules,omitempty"`
+		SMTPHost string        `json:"smtp_host,omitempty"`
+		SMTPPort int           `json:"smtp_port,omitempty"`
+		Rules    gateway.Rules `json:"rules,omitempty"`
 	}
 )
 
