@@ -5,18 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	gomail "net/mail"
 	"net/smtp"
 )
 
 type (
 	Mail struct {
-		From    *gomail.Address   `json:"from"`
-		To      []*gomail.Address `json:"to"`
-		Cc      []*gomail.Address `json:"cc"`
-		ReplyTo *gomail.Address   `json:"reply_to"`
-		Subject string            `json:"subject"`
-		Body    io.Reader         `json:"-"`
+		From    *Address   `json:"from"`
+		To      []*Address `json:"to"`
+		Cc      []*Address `json:"cc"`
+		ReplyTo *Address   `json:"reply_to"`
+		Subject string     `json:"subject"`
+		Body    io.Reader  `json:"-"`
 	}
 	SMTPClient struct {
 		host     string
@@ -64,27 +63,27 @@ func (s *SMTPClient) Send(m *Mail) error {
 	if len(s.user) > 0 && len(s.password) > 0 {
 		auth = smtp.PlainAuth("", s.user, s.password, s.host)
 	}
-	return smtp.SendMail(fmt.Sprintf("%s:%d", s.host, s.port), auth, m.From.Address, recipients(m), msg.Bytes())
+	return smtp.SendMail(fmt.Sprintf("%s:%d", s.host, s.port), auth, m.From.Address.Address, recipients(m), msg.Bytes())
 }
 
 func recipients(m *Mail) []string {
 	recipients := []string{}
 	for _, a := range m.To {
-		recipients = append(recipients, a.Address)
+		recipients = append(recipients, a.Address.Address)
 	}
 	for _, a := range m.Cc {
-		recipients = append(recipients, a.Address)
+		recipients = append(recipients, a.Address.Address)
 	}
 	return recipients
 }
 
-func joinMailAddress(a []*gomail.Address) string {
+func joinMailAddress(a []*Address) string {
 	buf := new(bytes.Buffer)
 	for i, aa := range a {
 		if i > 0 {
 			buf.WriteString(", ")
 		}
-		buf.WriteString(aa.Address)
+		buf.WriteString(aa.Address.Address)
 	}
 	return buf.String()
 }

@@ -3,7 +3,6 @@ package mail
 import (
 	"bytes"
 	"io/ioutil"
-	gomail "net/mail"
 	"strings"
 
 	"github.com/uphy/elastalert-mail-gateway/pkgs/elastalert"
@@ -58,10 +57,10 @@ func aggregateMail(mails []*Mail) (*Mail, error) {
 	}, nil
 }
 
-func addressesToString(addresses []*gomail.Address) string {
+func addressesToString(addresses []*Address) string {
 	buf := new(bytes.Buffer)
 	for _, addr := range addresses {
-		buf.WriteString(addr.Address)
+		buf.WriteString(addr.Address.Address)
 	}
 	return buf.String()
 }

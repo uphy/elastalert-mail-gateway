@@ -5,7 +5,6 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	gomail "net/mail"
 	"os"
 	"strings"
 
@@ -144,9 +143,9 @@ func Run() error {
 func mergeMail(received *mail.Mail, rule *config.Rule, body io.Reader) *mail.Mail {
 	// generate mail
 	var (
-		to      []*gomail.Address
-		cc      []*gomail.Address
-		replyTo *gomail.Address
+		to      []*mail.Address
+		cc      []*mail.Address
+		replyTo *mail.Address
 	)
 	if rule.To != nil {
 		to = rule.To.Addresses

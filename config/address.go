@@ -3,7 +3,8 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"net/mail"
+
+	"github.com/uphy/elastalert-mail-gateway/pkgs/mail"
 )
 
 type (

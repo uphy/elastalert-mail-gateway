@@ -60,34 +60,34 @@ func parseMail(e *mail.Envelope) *umail.Mail {
 	msg, _ := gomail.ReadMessage(e.NewReader())
 
 	var (
-		from    *gomail.Address
-		to      []*gomail.Address
-		cc      []*gomail.Address
-		replyTo *gomail.Address
+		from    *umail.Address
+		to      []*umail.Address
+		cc      []*umail.Address
+		replyTo *umail.Address
 	)
 
 	fromHeader := msg.Header.Get("From")
 	if len(fromHeader) > 0 {
-		from, _ = gomail.ParseAddress(fromHeader)
+		from, _ = umail.ParseAddress(fromHeader)
 	}
 
 	toHeader := msg.Header.Get("To")
 	if len(toHeader) > 0 {
-		to, _ = gomail.ParseAddressList(toHeader)
+		to, _ = umail.ParseAddressList(toHeader)
 	} else {
-		to = []*gomail.Address{}
+		to = []*umail.Address{}
 	}
 
 	ccHeader := msg.Header.Get("Cc")
 	if len(ccHeader) > 0 {
-		cc, _ = gomail.ParseAddressList(ccHeader)
+		cc, _ = umail.ParseAddressList(ccHeader)
 	} else {
-		cc = []*gomail.Address{}
+		cc = []*umail.Address{}
 	}
 
 	replyToHeader := msg.Header.Get("Reply-To")
 	if len(replyToHeader) > 0 {
-		replyTo, _ = gomail.ParseAddress(replyToHeader)
+		replyTo, _ = umail.ParseAddress(replyToHeader)
 	}
 
 	body := msg.Body
